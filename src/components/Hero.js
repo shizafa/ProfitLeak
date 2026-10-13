@@ -1,4 +1,7 @@
 // Source: index-saas.html lines 84-110
+
+import Link from "next/link";
+
 // The play button carries data-type/data-id and class "lightbox" -> picked up by Tobii.
 export default function Hero() {
   return (
@@ -21,14 +24,12 @@ export default function Hero() {
                 Upload your Amazon report, add your product costs, and see which products lose money, how much, and why. No account access needed.
               </p>
 
-              <a
-                href="#!"
-                data-type="youtube"
-                data-id="yba7hPeTSjk"
-                className="play-btn border border-light mt-4 lightbox"
+              <Link
+                href="/signup"
+                className=""
               >
-                <i data-feather="play" className="fea icon-ex-md text-white title-dark"></i>
-              </a>
+                <button className="btn btn-pills btn-primary">Get Started For free</button>
+              </Link>
             </div>
 
             <div className="home-dashboard">

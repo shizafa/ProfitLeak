@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 const FEATURES = [
   { icon: 'uil-water',           title: 'True profit per product' , description: 'See the actual profit margin for each product in your Amazon inventory.' },
   { icon: 'uil-dropbox',         title: 'Green or red, at a glance' , description: 'Quickly identify which products are profitable and which are losing money.' },
@@ -95,9 +95,9 @@ export default function Features() {
               </ul>
               <div className="mt-4">
                 {/* TODO: point this at a real route */}
-                <a href="#" className="mt-3 h6 text-primary">
+                <Link href="/signup" className="mt-3 h6 text-primary">
                   Find Out More <i className="uil uil-angle-right-b"></i>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -120,9 +120,9 @@ export default function Features() {
               </p>
               <div className="mt-4">
                 {/* TODO: point this at a real route */}
-                <a href="#" className="btn btn-primary">
+                <Link href="/signup" className="btn btn-primary">
                   Learn More <i className="uil uil-angle-right-b"></i>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
