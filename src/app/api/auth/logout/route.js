@@ -12,7 +12,7 @@ export async function POST(request) {
 
   // Tell Supabase to end this user's session
   const { error } = await supabaseAdmin.auth.admin.signOut(token);
-
+ 
   if (error) {
     return Response.json({ error: error.message }, { status: 400 });
   }
