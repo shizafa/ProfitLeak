@@ -2,7 +2,7 @@
 export default function Cta() {
   return (
     <section className="section">
-      <div className="bg-overlay bg-gradient-primary"></div>
+      <div className="bg-overlay" style={{ backgroundColor: '#0F172A' }}></div>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12">

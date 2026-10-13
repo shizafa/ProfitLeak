@@ -13,11 +13,7 @@ const SOCIALS = [
 const COMPANY_LINKS = [
   'About us',
   'Services',
-  'Team',
   'Pricing',
-  'Project',
-  'Careers',
-  'Blog',
   'Login',
 ];
 
@@ -72,14 +68,13 @@ export default function Footer() {
         <div className="row">
           <div className="col-12">
             <div className="footer-py-60 footer-border">
-              <div className="row">
+              <div className="row flex justify-content-center gap-4">
                 <div className="col-lg-4 col-12 mb-0 mb-md-4 pb-0 pb-md-2">
                   <a href="#" className="logo-footer">
-                    <img src="/images/logo-light.png" alt="" />
+                    <img src="/images/dark-img.png" alt="" style={{ height: '100px' }} />
                   </a>
                   <p className="mt-4">
-                    Start working with Fronter that can provide everything you
-                    need to generate awareness, drive traffic, connect.
+                    Know about your Sales, profit and loss, and other key metrics of your business with our easy to use dashboard.
                   </p>
                   <ul className="list-unstyled social-icon foot-social-icon mb-0 mt-4">
                     {SOCIALS.map((social) => (
@@ -113,7 +108,7 @@ export default function Footer() {
                 </div>
                 {/* end col */}
 
-                <div className="col-lg-2 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                {/* <div className="col-lg-2 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
                   <h5 className="footer-head">Usefull Links</h5>
                   <ul className="list-unstyled footer-list mt-4">
                     {USEFUL_LINKS.map((link) => (
@@ -124,11 +119,11 @@ export default function Footer() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
                 {/* end col */}
 
                 <div className="col-lg-4 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
-                  <h5 className="footer-head">Start project with Fronter</h5>
+                  <h5 className="footer-head">Start with Profit Leak Founder</h5>
 
                   <ul className="list-unstyled footer-list mt-4 mb-2">
                     <li className="list-inline-item mx-1">
@@ -149,7 +144,7 @@ export default function Footer() {
                     </a>
                   </small>
 
-                  <img src="/images/logo-icon-48.png" className="mt-4" alt="" />
+                  <img src="/images/dark-img.png" className="mt-4" alt="" style={{ height: '80px' }} />
                 </div>
                 {/* end col */}
               </div>

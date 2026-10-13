@@ -7,12 +7,12 @@ export default function Navbar() {
     <header id="topnav" className="defaultscroll sticky">
       <div className="container">
         {/* Logo container */}
-        <a className="logo" href="/">
+        <a className="logo" href="/" style={{ height: 'auto' }}>
           <span className="logo-light-mode">
-            <img src="/images/image.png" className="l-dark" alt="" />
-            <img src="/images/image.png" className="l-light" alt="" />
+            <img src="/images/dark-img.png" className="l-dark" alt="" style={{ height: '80px' }} />
+            <img src="/images/dark-img.png" className="l-light" alt="" style={{ height: '80px' }} />
           </span>
-          <img src="/images/image.png" className="logo-dark-mode" alt="" />
+          <img src="/images/dark-img.png" className="logo-dark-mode" alt="" style={{ height: '80px' }} />
         </a>
         {/* Logo End */}
 

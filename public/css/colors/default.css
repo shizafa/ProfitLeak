@@ -45,7 +45,7 @@
 .contact-show-btn:before,
 .qs-datepicker-container .qs-squares .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover, 
 .qs-datepicker-container .qs-squares .qs-square.qs-current {
-    background-color: #2a52c3 !important;
+    background-color: #0F172A !important;
 }
 
 .text-primary,
