@@ -56,29 +56,29 @@ export default function Sidebar() {
       </div>
       {/* /.modal-content */}
     </div>
-    {/* /.modal-dialog */}
+    {/* /.modal-dialog */} 
   </div>
   {/* /.modal */}
   {/* ========== App Menu ========== */}
   <div className="app-menu navbar-menu">
-    {/* LOGO */}
+
     <div className="navbar-brand-box">
       {/* Dark Logo*/}
       <a href="index.html" className="logo logo-dark">
         <span className="logo-sm">
-          <img src="assets/images/logo-sm.png" alt="" height={22} />
+          <img src="/images/dark-img.png" alt="" height={80} />
         </span>
         <span className="logo-lg">
-          <img src="assets/images/logo-dark.png" alt="" height={17} />
+          <img src="/images/dark-img.png" alt="" height={80} />
         </span>
       </a>
       {/* Light Logo*/}
       <a href="index.html" className="logo logo-light">
         <span className="logo-sm">
-          <img src="assets/images/logo-sm.png" alt="" height={22} />
+          <img src="/images/dark-img.png" alt="" height={80} />
         </span>
         <span className="logo-lg">
-          <img src="assets/images/logo-light.png" alt="" height={17} />
+          <img src="/images/dark-img.png" alt="" height={80} />
         </span>
       </a>
       <button

@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="col-sm-6">© Velzon.</div>
           <div className="col-sm-6">
             <div className="text-sm-end d-none d-sm-block">
-              Design &amp; Develop by Themesbrand
+              Design &amp; Develop by ME
             </div>
           </div>
         </div>

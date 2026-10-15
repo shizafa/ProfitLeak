@@ -1,3 +1,4 @@
+import AuthGuard from "@/components/dashboard/layout/AuthGuard";
 import Footer from "@/components/dashboard/layout/Footer";
 import Sidebar from "@/components/dashboard/layout/Sidebar";
 import TopBar from "@/components/dashboard/layout/TopBar";
@@ -39,17 +40,19 @@ export default function DashboardLayout({ children }) {
         />
       </head>
       <body>
-        <div id="layout-wrapper">
-          <TopBar />
-          <Sidebar />
+        <AuthGuard>
+          <div id="layout-wrapper">
+            <TopBar />
+            <Sidebar />
 
-          <div className="main-content">
-            <div className="page-content">
-              <div className="container-fluid">{children}</div>
+            <div className="main-content">
+              <div className="page-content">
+                <div className="container-fluid">{children}</div>
+              </div>
+              <Footer />
             </div>
-            <Footer />
           </div>
-        </div>
+        </AuthGuard>
       </body>
     </html>
   );
