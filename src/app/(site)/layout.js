@@ -1,7 +1,7 @@
 export const metadata = {
-  title: 'Fronter - One Page & Multipurpose Parallax Template',
+  title: 'Profit Leak',
   description: 'Responsive HTML5 Template',
-  icons: { icon: '/images/favicon.ico' },
+  icons: { icon: '/favicon.ico' },
 };
 
 export default function RootLayout({ children }) {
