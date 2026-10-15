@@ -2,7 +2,7 @@
 
 export default function Table() {
   return (
-    <div className="col-xl-8" >
+    <div className="col-xl-12" >
       <div className="card" style ={{width: "100%"}}> 
         <div className="card-header align-items-center d-flex">
           <h4 className="card-title mb-0 flex-grow-1">Recent Orders</h4>
