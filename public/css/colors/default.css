@@ -1,4 +1,7 @@
-.bg-primary,
+.bg-primary {
+    background-color: #0F172A !important;
+}
+
 .bg-soft-primary,
 .text-border-primary:after,
 .btn-primary,
@@ -45,7 +48,7 @@
 .contact-show-btn:before,
 .qs-datepicker-container .qs-squares .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover, 
 .qs-datepicker-container .qs-squares .qs-square.qs-current {
-    background-color: #0F172A !important;
+    background-color: #fc9400 !important;
 }
 
 .text-primary,
@@ -111,7 +114,7 @@ a.text-primary:focus,
 .filter-search-form .icons,
 .container-filter.filter-box li.active, 
 .container-filter.filter-box li:hover {
-    color: #2a52c3 !important;
+    color: #fc9400 !important;
 }
 
 .border-primary,
@@ -154,7 +157,7 @@ a.text-primary:focus,
 .team.team-primary .btn,
 .container-filter.filter-box li.active, 
 .container-filter.filter-box li:hover {
-    border-color: #2a52c3 !important;
+    border-color: #fc9400 !important;
 }
 
 .btn-primary,
@@ -168,7 +171,7 @@ a.text-primary:focus,
 .portfolio.portfolio-primary .btn,
 .features.feature-primary .btn-soft,
 .team.team-primary .btn {
-    box-shadow: 0 3px 5px 0 rgba(42, 82, 195, 0.1) !important;
+    box-shadow: 0 3px 5px 0 rgba(252, 148, 0, 0.1) !important;
 }
 
 .features.feature-primary .icons i,
@@ -176,7 +179,7 @@ a.text-primary:focus,
 .studio-wrapper:before,
 .container-filter.filter-box li.active, 
 .container-filter.filter-box li:hover {
-    background: rgba(42, 82, 195, 0.1) !important;
+    background: rgba(252, 148, 0, 0.1) !important;
 }
 
 .btn-primary:hover,
@@ -199,45 +202,45 @@ a.text-primary:focus,
 .team.team-primary .btn:active,
 .team.team-primary .btn.active,
 .team.team-primary .btn.focus {
-    background-color: #214099 !important;
-    border-color: #214099 !important;
+    background-color: #d97e00 !important;
+    border-color: #d97e00 !important;
 }
 
 .social-icon li a:hover .fea-social {
-    fill: #2a52c3 !important;
+    fill: #fc9400 !important;
 }
 
 .btn-soft-primary {
-    border-color: rgba(42, 82, 195, 0.05) !important;
+    border-color: rgba(252, 148, 0, 0.05) !important;
 }
 
 .alert-primary {
-    background-color: rgba(42, 82, 195, 0.9) !important;
+    background-color: rgba(252, 148, 0, 0.9) !important;
 }
 
 .carousel-indicators [data-bs-target] {
-    background: rgba(42, 82, 195, 0.5) !important;
+    background: rgba(252, 148, 0, 0.5) !important;
 }
 
 .portfolio.portfolio-primary .img-bg,
 .features.feature-primary .feature-ovelay-three {
-    background-color: rgba(42, 82, 195, 0.15) !important;
+    background-color: rgba(252, 148, 0, 0.15) !important;
 }
 
 .bg-soft-primary,
 .btn-soft-primary,
 .features.feature-primary .feature-ovelay-one,
 .features.feature-primary.category:hover {
-    background-color: rgba(42, 82, 195, 0.05) !important;
+    background-color: rgba(252, 148, 0, 0.05) !important;
 }
 
 .bg-blur-primary {
     backdrop-filter: blur(12px);
-    background-color: rgba(42, 82, 195, 0.8) !important;
+    background-color: rgba(252, 148, 0, 0.8) !important;
 }
 
 .bg-gradient-primary {
-    background: linear-gradient(to left, #4d499e 0%, #214099 100%) !important;
+    background: linear-gradient(to left, #4d499e 0%, #d97e00 100%) !important;
 }
 
 .bg-primary-gradient-overlay {
@@ -250,63 +253,63 @@ a.text-primary:focus,
 .features.feature-primary .bg-soft,
 .features.feature-primary .feature-ovelay-two,
 .features.feature-primary:hover .feature-icon i {
-    background: rgba(42, 82, 195, 0.1) !important;
+    background: rgba(252, 148, 0, 0.1) !important;
 }
 
 .app-feature-shape-right:after,
 .app-feature-shape-left:after {
-    box-shadow: 0 0 40px rgba(42, 82, 195, 0.1) !important;
+    box-shadow: 0 0 40px rgba(252, 148, 0, 0.1) !important;
 }
 
 .background-effect .circles li,
 #topnav .navigation-menu.personal-menu>li:hover>a:after,
 #topnav .navigation-menu.personal-menu>li.active>a:after {
-    background: rgba(42, 82, 195, 0.25) !important;
+    background: rgba(252, 148, 0, 0.25) !important;
 }
 
 .play-icon i,
 .play-btn i {
-    -webkit-text-stroke: 2px #2a52c3 !important;
+    -webkit-text-stroke: 2px #fc9400 !important;
     -webkit-text-fill-color: transparent;
 }
 
 .play-icon i:hover,
 .play-btn i:hover {
-    -webkit-text-stroke: 2px #2a52c3 !important;
-    -webkit-text-fill-color: #2a52c3 !important;
+    -webkit-text-stroke: 2px #fc9400 !important;
+    -webkit-text-fill-color: #fc9400 !important;
 }
 
 .features.feature-primary .btn-color,
 .features.feature-primary .btn-soft {
-    box-shadow: 0 3px 5px 0 rgba(42, 82, 195, 0.3) !important;
+    box-shadow: 0 3px 5px 0 rgba(252, 148, 0, 0.3) !important;
 }
 
 .features.feature-primary .feature-icon i {
-    border-color: rgba(42, 82, 195, 0.1) !important;
+    border-color: rgba(252, 148, 0, 0.1) !important;
 }
 
 .features.feature-primary.feature-image {
-    border-image: linear-gradient(to right, #2a52c3, #efbad3) 10 !important;
+    border-image: linear-gradient(to right, #fc9400, #efbad3) 10 !important;
 }
 
 .tns-nav button {
-    border-color: rgba(42, 82, 195, 0.5) !important;
+    border-color: rgba(252, 148, 0, 0.5) !important;
 }
 
 .ribbon.ribbon-primary span:before {
-    border-left-color: #214099 !important;
-    border-top-color: #214099 !important;
+    border-left-color: #d97e00 !important;
+    border-top-color: #d97e00 !important;
 }
 
 .ribbon.ribbon-primary span:after {
-    border-right-color: #214099 !important;
-    border-top-color: #214099 !important;
+    border-right-color: #d97e00 !important;
+    border-top-color: #d97e00 !important;
 }
 
 .contact-show-btn:before {
-    box-shadow: 0 10px 25px rgba(42, 82, 195, 0.5) !important;
+    box-shadow: 0 10px 25px rgba(252, 148, 0, 0.5) !important;
 }
 
 .photography-scss .container-filter .categories:after {
-    background-color: rgba(42, 82, 195, 0.4) !important;
+    background-color: rgba(252, 148, 0, 0.4) !important;
 }

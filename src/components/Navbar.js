@@ -9,7 +9,7 @@ export default function Navbar() {
         {/* Logo container */}
         <a className="logo" href="/" style={{ height: 'auto' }}>
           <span className="logo-light-mode">
-            <img src="/images/dark-img.png" className="l-dark" alt="" style={{ height: '80px' }} />
+            <img src="/images/image.png" className="l-dark" alt="" style={{ height: '80px' }} />
             <img src="/images/dark-img.png" className="l-light" alt="" style={{ height: '80px' }} />
           </span>
           <img src="/images/dark-img.png" className="logo-dark-mode" alt="" style={{ height: '80px' }} />
@@ -55,9 +55,7 @@ export default function Navbar() {
               <a href="#pricing">Pricing</a>
             </li>
             <li>
-              <a href="/signup" className="">
-                Login
-              </a>
+              <a href="/login">Login</a>
             </li>
           </ul>
           {/* end navigation menu */}

@@ -7,7 +7,6 @@ export { default as Testimonials } from './Testimonials';
 export { default as TestimonialSlider } from './TestimonialSlider';
 export { default as Pricing } from './Pricing';
 export { default as Faq } from './Faq';
-export { default as Cta } from './Cta';
 export { default as Footer } from './Footer';
 export { default as BackToTop } from './BackToTop';
 export { default as ThemeScripts } from './ThemeScripts';

@@ -22,8 +22,6 @@ const CHECKLIST = [
   'Nobody is checking profit per product',
 ];
 
-const CLIENTS = ['amazon', 'google', 'lenovo', 'paypal', 'shopify', 'spotify'];
-
 export default function Features() {
   return (
     <section className="section mt-0 mt-md-5 overflow-hidden" id="features">
@@ -135,40 +133,6 @@ export default function Features() {
               </div>
             </div>
           </div>
-          {/* end col */}
-        </div>
-        {/* end row */}
-      </div>
-      {/* end container */}
-
-      {/* ---------- 4. client logos ---------- */}
-      <div className="container mt-100 mt-60">
-        <div className="row justify-content-center">
-          <div className="col-12 text-center">
-            <div className="section-title mb-4 pb-2">
-              <h4 className="title mb-4">More than 10K+ Sellers are Using Profit Leak</h4>
-              <p className="text-muted para-desc mx-auto mb-0">
-                See your actual profit with Profit Leak. No Amazon login needed. No complicated setup. Just upload a report and see your real profit per product.
-              </p>
-            </div>
-          </div>
-          {/* end col */}
-        </div>
-        {/* end row */}
-
-        <div className="row justify-content-center">
-          {CLIENTS.map((client) => (
-            <div
-              className="col-lg-2 col-md-2 col-6 text-center mt-4 pt-2"
-              key={client}
-            >
-              <img
-                src={`/images/client/${client}.svg`}
-                className="avatar avatar-ex-sm"
-                alt={client}
-              />
-            </div>
-          ))}
           {/* end col */}
         </div>
         {/* end row */}

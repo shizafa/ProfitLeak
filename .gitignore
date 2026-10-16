@@ -42,3 +42,5 @@ next-env.d.ts
 # Postman
 .postman/
 postman/
+
+AGENTS.md

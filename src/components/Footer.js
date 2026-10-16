@@ -1,12 +1,9 @@
 
 const SOCIALS = [
-  { href: 'https://dribbble.com/shreethemes', icon: 'uil-dribbble align-middle', title: 'dribbble' },
-  { href: 'https://www.behance.net/shreethemes', icon: 'uil-behance', title: 'Behance' },
-  { href: 'http://linkedin.com/company/shreethemes', icon: 'uil-linkedin', title: 'Linkedin' },
-  { href: 'https://www.facebook.com/shreethemes', icon: 'uil-facebook-f align-middle', title: 'facebook' },
-  { href: 'https://www.instagram.com/shreethemes/', icon: 'uil-instagram align-middle', title: 'instagram' },
-  { href: 'https://x.com/shreethemes', icon: 'uil-twitter align-middle', title: 'twitter' },
-  { href: 'mailto:support@shreethemes.in', icon: 'uil-envelope align-middle', title: 'email' },
+  { href: 'http://linkedin.com', icon: 'uil-linkedin', title: 'Linkedin' },
+  { href: 'https://www.facebook.com', icon: 'uil-facebook-f align-middle', title: 'facebook' },
+  { href: 'https://www.instagram.com', icon: 'uil-instagram align-middle', title: 'instagram' },
+  { href: 'https://x.com', icon: 'uil-twitter align-middle', title: 'twitter' },
 ];
 
 //NEED TO SWAP LINKSSSS
@@ -164,17 +161,7 @@ export default function Footer() {
             <div className="col">
               <div className="text-center">
                 <p className="mb-0">
-                   Fronter. Design with{' '}
-                  <i className="mdi mdi-heart text-danger"></i> by{' '}
-                  <a
-                    href="https://shreethemes.in/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-reset"
-                  >
-                    Shreethemes
-                  </a>
-                  .
+                   Profit Leak 2026 | All Rights Reserved.
                 </p>
               </div>
             </div>

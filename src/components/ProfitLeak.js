@@ -5,7 +5,6 @@ import Testimonials from './Testimonials';
 import TestimonialSlider from './TestimonialSlider';
 import Pricing from './Pricing';
 import Faq from './Faq';
-import Cta from './Cta';
 import Footer from './Footer';
 import BackToTop from './BackToTop';
 import ThemeScripts from './ThemeScripts';
@@ -23,7 +22,6 @@ export default function ProfitLeak() {
         <Faq />
       </section>
 
-      <Cta />
       <Footer />
 
       <BackToTop />

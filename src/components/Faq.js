@@ -29,7 +29,7 @@ export default function Faq() {
 
       <div className="row align-items-center">
         <div className="col-md-6 mt-4 pt-2">
-          <img src="/images/faqs.png" className="img-fluid" alt="" />
+          <img src="/images/dashboard-ill.png" className="img-fluid" alt="" />
         </div>
         {/* end col */}
 

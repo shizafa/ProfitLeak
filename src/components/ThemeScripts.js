@@ -20,11 +20,7 @@ export default function ThemeScripts() {
     if (injected) return;
     injected = true;
 
-    let cancelled = false;
-
     const loadNext = (i) => {
-      if (cancelled) return;
-
       if (i >= SCRIPTS.length) {
         // The template's own init, which the missed 'load' event skipped.
         try {
@@ -62,10 +58,6 @@ export default function ThemeScripts() {
     };
 
     loadNext(0);
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   return null;
