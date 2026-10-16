@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Profit Leak',
-  description: 'Responsive HTML5 Template',
+  description: 'Profit Leak is a powerful tool that helps businesses identify and eliminate revenue leaks, optimize pricing strategies, and maximize profitability. With advanced analytics and actionable insights, Profit Leak empowers companies to make data-driven decisions and drive sustainable growth.',
   icons: { icon: '/favicon.ico' },
 };
 
