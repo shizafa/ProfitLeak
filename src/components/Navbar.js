@@ -54,6 +54,11 @@ export default function Navbar() {
             <li className="has-submenu">
               <a href="#pricing">Pricing</a>
             </li>
+            <li>
+              <a href="/signup" className="">
+                Login
+              </a>
+            </li>
           </ul>
           {/* end navigation menu */}
         </div>
