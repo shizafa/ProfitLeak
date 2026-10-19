@@ -1,6 +1,14 @@
 "use client";
-
 export default function Sidebar() {
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } finally {
+      window.location.href = "/login";
+    }
+  };
+
   return (
     <div className="app-menu navbar-menu">
       <div className="navbar-brand-box">
@@ -43,6 +51,12 @@ export default function Sidebar() {
               <a href="/dashboard/settings" className="nav-link menu-link">
                 <i className="ri-settings-3-line" />{" "}
                 <span>Settings</span>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="/login" className="nav-link menu-link" onClick={handleLogout}>
+                <i className="ri-logout-box-r-line" />{" "}
+                <span>Logout</span>
               </a>
             </li>
           </ul>
