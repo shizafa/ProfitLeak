@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase/supabaseClient";
 
 export async function POST(request) {
@@ -20,13 +21,26 @@ export async function POST(request) {
     return Response.json({ error: "Wrong email or password" }, { status: 401 });
   }
 
-  // Send back the tokens. The user keeps these to prove they are logged in.
+  // Store the tokens in httpOnly cookies so proxy.js can read them server-side.
+  const cookieStore = await cookies();
+  cookieStore.set("sb-access-token", data.session.access_token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: data.session.expires_in,
+  });
+  cookieStore.set("sb-refresh-token", data.session.refresh_token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    path: "/",
+  });
+
   return Response.json(
     {
       message: "Login successful",
       user: { id: data.user.id, email: data.user.email },
-      access_token: data.session.access_token,
-      refresh_token: data.session.refresh_token,
     },
     { status: 200 }
   );

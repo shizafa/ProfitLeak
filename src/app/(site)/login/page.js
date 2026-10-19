@@ -1,37 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase/supabaseClient";
 
-export default function SignUpPage() {
+export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [checkingSession, setCheckingSession] = useState(true);
-
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-
-    if (!token) {
-      setCheckingSession(false);
-      return;
-    }
-
-    supabase.auth.getUser(token).then(({ data, error }) => {
-      if (data?.user && !error) {
-        router.push('/dashboard');
-        return;
-      }
-
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      setCheckingSession(false);
-    });
-  }, [router]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -51,19 +29,12 @@ export default function SignUpPage() {
         return;
       }
 
-      localStorage.setItem('access_token', data.access_token);
-      localStorage.setItem('refresh_token', data.refresh_token);
-
       router.push('/dashboard');
     } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
-  }
-
-  if (checkingSession) {
-    return null;
   }
 
   return (

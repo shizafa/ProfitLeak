@@ -1,18 +1,20 @@
+import { cookies } from "next/headers";
 import { supabaseAdmin } from "@/lib/supabase/supabaseAdmin";
 
-export async function POST(request) {
-  // The token comes in the header: Authorization: Bearer <token>
-  const authHeader = request.headers.get("authorization");
+export async function POST() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("sb-access-token")?.value;
 
-  if (!authHeader) {
-    return Response.json({ error: "No token sent" }, { status: 401 });
+  if (!token) {
+    return Response.json({ error: "No session found" }, { status: 401 });
   }
-
-  const token = authHeader.replace("Bearer ", "");
 
   // Tell Supabase to end this user's session
   const { error } = await supabaseAdmin.auth.admin.signOut(token);
- 
+
+  cookieStore.delete("sb-access-token");
+  cookieStore.delete("sb-refresh-token");
+
   if (error) {
     return Response.json({ error: error.message }, { status: 400 });
   }
