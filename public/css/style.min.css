@@ -246,7 +246,7 @@ p {
   margin: 0 auto;
   line-height: 50px;
   text-align: center;
-  box-shadow: 0 0 3px rgba(60, 72, 88, 0.15);
+  box-shadow: 0 0 3px #3c485826;
   border-radius: 30px;
 }
 .home-shape-arrow .arrow-icon {
