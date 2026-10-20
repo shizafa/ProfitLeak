@@ -9,8 +9,8 @@ export default function Testimonials() {
                 What our users says !
               </h4>
               <p className="text-white-50 para-desc mx-auto mb-0">
-                Start working with Fronter that can provide everything you need
-                to generate awareness, drive traffic, connect.
+                We have helped thousands of Amazon sellers to save money and
+                increase their profits. Here are some of their stories.
               </p>
             </div>
           </div>

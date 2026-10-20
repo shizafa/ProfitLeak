@@ -124,12 +124,12 @@ export default function Footer() {
 
                   <ul className="list-unstyled footer-list mt-4 mb-2">
                     <li className="list-inline-item mx-1">
-                      <a href="#" className="btn btn-soft-primary">
+                      <a href="/login" className="btn btn-soft-primary">
                         Signin
                       </a>
                     </li>
                     <li className="list-inline-item mx-1">
-                      <a href="#" className="btn btn-primary">
+                      <a href="/signup" className="btn btn-primary">
                         Signup
                       </a>
                     </li>

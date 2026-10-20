@@ -1,14 +1,33 @@
 const PLANS = [
-  { price: '19', name: 'Personal', people: '1 Person', button: 'btn-light' },
-  { price: '39', name: 'Business', people: '5 Person', button: 'btn-primary' },
-  { price: '99', name: 'Enterprise', people: '10 Person', button: 'btn-light' },
+  {
+    price: '0',
+    name: 'Once Free',
+    reviews: '1 Free Report Review',
+    button: 'btn-light',
+    cta: 'Start Free',
+  },
+  {
+    price: '9',
+    name: 'Pro',
+    reviews: '2 Report Reviews per Month',
+    button: 'btn-primary',
+    cta: 'Start Now',
+  },
+  {
+    price: '19',
+    name: 'Max',
+    reviews: '4 Report Reviews per Month',
+    button: 'btn-light',
+    cta: 'Start Now',
+  },
 ];
 
+// Same perks on every plan; only the number of reviews changes.
 const PLAN_PERKS = [
-  'Unlimited Projects',
-  'Club Access Unlimited Access',
-  'Class Access Fitness Classes',
-  'Enhanced Security',
+  'Loss-Making Products Highlighted',
+  'Profit Calculated per Product',
+  'Loss Reason for Each Product',
+  'Report History Saved',
 ];
 
 export default function Pricing() {
@@ -19,8 +38,8 @@ export default function Pricing() {
           <div className="section-title text-center mb-4 pb-2">
             <h4 className="title mb-4">Pricing Plans</h4>
             <p className="text-muted para-desc mx-auto mb-0">
-              Start working with Fronter that can provide everything you need to
-              generate awareness, drive traffic, connect.
+              Upload your Amazon report and see which products are losing money.
+              Your first review is free.
             </p>
           </div>
         </div>
@@ -43,7 +62,7 @@ export default function Pricing() {
               </div>
 
               <ul className="list-unstyled mb-0 mt-4">
-                <li className="text-muted mt-3">Number of People {plan.people}</li>
+                <li className="text-muted mt-3">{plan.reviews}</li>
                 {PLAN_PERKS.map((perk) => (
                   <li className="text-muted mt-3" key={perk}>
                     {perk}
@@ -54,7 +73,7 @@ export default function Pricing() {
               <div className="mt-4 pt-2">
                 {/* TODO: point this at your signup / checkout route */}
                 <a href="#" className={'btn ' + plan.button}>
-                  Start Now
+                  {plan.cta}
                 </a>
               </div>
             </div>
