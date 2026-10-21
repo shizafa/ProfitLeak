@@ -23,16 +23,18 @@ export async function POST(request) {
 
   // Store the tokens in httpOnly cookies so proxy.js can read them server-side.
   const cookieStore = await cookies();
+  const secure = process.env.NODE_ENV === "production";
+
   cookieStore.set("sb-access-token", data.session.access_token, {
     httpOnly: true,
-    secure: true,
+    secure,
     sameSite: "lax",
     path: "/",
     maxAge: data.session.expires_in,
   });
   cookieStore.set("sb-refresh-token", data.session.refresh_token, {
     httpOnly: true,
-    secure: true,
+    secure,
     sameSite: "lax",
     path: "/",
   });

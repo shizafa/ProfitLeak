@@ -1,8 +1,21 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 // Source: index-saas.html lines 34-80
 // Client component: the hamburger calls toggleMenu(), defined in /js/app.js
 export default function Navbar() {
+  const [fullName, setFullName] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/me')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.full_name) setFullName(data.full_name);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <header id="topnav" className="defaultscroll sticky">
       <div className="container">
@@ -55,7 +68,7 @@ export default function Navbar() {
               <a href="#pricing">Pricing</a>
             </li>
             <li>
-              <a href="/login">Login</a>
+              <a href={fullName ? '/dashboard' : '/login'}>{fullName || 'Login'}</a>
             </li>
           </ul>
           {/* end navigation menu */}
