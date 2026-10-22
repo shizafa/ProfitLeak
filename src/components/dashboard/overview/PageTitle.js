@@ -1,15 +1,26 @@
 "use client";
-
+import { useEffect, useState } from 'react';
 export default function PageTitle({ title }) {
+    const [fullName, setFullName] = useState(null);
+  
+    useEffect(() => {
+      fetch('/api/me')
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data?.full_name) setFullName(data.full_name);
+        })
+        .catch(() => {});3
+    }, []);
+  
   return (
     <div className="h-100">
       <div className="row mb-3 pb-1">
         <div className="col-12">
           <div className="d-flex align-items-lg-center flex-lg-row flex-column">
             <div className="flex-grow-1">
-              <h4 className="fs-16 mb-1">Good Morning, Anna!</h4>
+              <h4 className="fs-16 mb-1">Good Morning, {fullName || 'Loading...'}!</h4>
               <p className="text-muted mb-0">
-                Here's what's happening with your store today.
+                Here's what's happening with your store this week.
               </p>
             </div>
             <div className="mt-3 mt-lg-0">
@@ -36,8 +47,7 @@ export default function PageTitle({ title }) {
                       type="button"
                       className="btn btn-soft-success material-shadow-none"
                     >
-                      <i className="ri-add-circle-line align-middle me-1" /> Add
-                      Product
+                      <i className="ri-add-circle-line align-middle me-1" /> Product 
                     </button>
                   </div>
                   {/*end col*/}
