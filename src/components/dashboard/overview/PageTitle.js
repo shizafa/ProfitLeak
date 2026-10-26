@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 export default function PageTitle({ title, onReportResult }) {
   const [fullName, setFullName] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [message, setMessage] = useState(null); // { type: "success" | "danger", text }
+  const [uploadingCosts, setUploadingCosts] = useState(false);
+  const [message, setMessage] = useState(null); // { type: "success" | "warning" | "danger", text }
   const reportInput = useRef(null);
+  const costInput = useRef(null);
 
   useEffect(() => {
     fetch("/api/me")
@@ -40,7 +42,7 @@ export default function PageTitle({ title, onReportResult }) {
         return;
       }
 
-      onReportResult?.(data); // { results, missingCosts, totals }
+      onReportResult?.(data);
       setMessage({
         type: "success",
         text:
@@ -52,6 +54,61 @@ export default function PageTitle({ title, onReportResult }) {
       setMessage({ type: "danger", text: "Something went wrong. Try again." });
     } finally {
       setUploading(false);
+    }
+  }
+
+  async function handleCostChange(e) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingCosts(true);
+    setMessage(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/costs/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        const details = data.errors?.length
+          ? "\n" + data.errors.map((er) => `Line ${er.line}: ${er.message}`).join("\n")
+          : "";
+        setMessage({ type: "danger", text: (data.error || "Upload failed") + details });
+        return;
+      }
+
+      // Costs are saved. Reload the latest report so profit is recalculated.
+      let reportLoaded = false;
+      try {
+        const reportRes = await fetch("/api/reports/latest");
+        const reportData = reportRes.ok ? await reportRes.json() : null;
+
+        if (reportData && !reportData.empty) {
+          onReportResult?.(reportData);
+          reportLoaded = true;
+        }
+      } catch {}
+
+      let text = `${data.saved} cost(s) saved.`;
+      if (data.skipped > 0) {
+        text += ` ${data.skipped} row(s) skipped:\n`;
+        text += data.errors.map((er) => `Line ${er.line}: ${er.message}`).join("\n");
+      }
+      if (!reportLoaded) {
+        text += "\nUpload a report to see your profit.";
+      }
+
+      setMessage({ type: data.skipped > 0 ? "warning" : "success", text });
+    } catch {
+      setMessage({ type: "danger", text: "Something went wrong. Try again." });
+    } finally {
+      setUploadingCosts(false);
     }
   }
 
@@ -78,24 +135,38 @@ export default function PageTitle({ title, onReportResult }) {
               <button
                 type="button"
                 className="btn btn-soft-success material-shadow-none"
-                disabled={uploading}
+                disabled={uploading || uploadingCosts}
                 onClick={() => reportInput.current?.click()}
               >
                 <i className="ri-add-circle-line align-middle me-1" />
                 {uploading ? "Uploading..." : "Upload Report"}
               </button>
 
+              <input
+                ref={costInput}
+                type="file"
+                accept=".csv"
+                hidden
+                onChange={handleCostChange}
+              />
               <button
                 type="button"
                 className="btn btn-soft-success material-shadow-none"
+                disabled={uploading || uploadingCosts}
+                onClick={() => costInput.current?.click()}
               >
-                <i className="ri-add-circle-line align-middle me-1" /> Upload Cost CSV
+                <i className="ri-add-circle-line align-middle me-1" />
+                {uploadingCosts ? "Uploading..." : "Upload Cost CSV"}
               </button>
             </div>
           </div>
 
           {message && (
-            <div className={`alert alert-${message.type} mt-3 mb-0`} role="alert">
+            <div
+              className={`alert alert-${message.type} mt-3 mb-0`}
+              style={{ whiteSpace: "pre-line" }}
+              role="alert"
+            >
               {message.text}
             </div>
           )}
