@@ -2,8 +2,13 @@ import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase/supabaseClient";
 import { parseReport } from "@/lib/amazon/parseReport";
 import { summarizeBySku } from "@/lib/amazon/summarizeBySku";
+import { calculateProfit } from "@/lib/amazon/calculateProfit";
 
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB in bytes
+
+function round2(n) {
+  return Math.round(n * 100) / 100;
+}
 
 export async function POST(request) {
   // 1. Check the user is logged in
@@ -55,6 +60,26 @@ export async function POST(request) {
   // 5. Add up the numbers per SKU
   const products = summarizeBySku(rows);
 
-  // For now: show the per-SKU totals
-  return Response.json({ products }, { status: 200 });
+  // 6. Load this user's saved product costs
+  const { data: costs, error: costsError } = await supabase
+    .from("product_costs")
+    .select("sku, cost_per_unit")
+    .eq("user_id", data.user.id); // change "user_id" if your column is named differently
+
+  if (costsError) {
+    return Response.json({ error: "Could not load product costs" }, { status: 500 });
+  }
+
+  // 7. Calculate profit per SKU
+  const { results, missingCosts } = calculateProfit(products, costs ?? []);
+
+  // 8. Totals for the summary cards
+  const totals = {
+    profit: round2(results.reduce((sum, r) => sum + r.profit, 0)),
+    units: products.reduce((sum, p) => sum + p.units_sold, 0),
+    fees: round2(products.reduce((sum, p) => sum + p.amazon_fees, 0)),
+    revenue: round2(products.reduce((sum, p) => sum + p.revenue, 0)),
+  };
+
+  return Response.json({ results, missingCosts, totals }, { status: 200 });
 }
