@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase/supabaseClient";
+import { getUserClient } from "@/lib/supabase/getUserClient";
 import { parseReport } from "@/lib/amazon/parseReport";
 import { summarizeBySku, summarizeOtherCharges } from "@/lib/amazon/summarizeBySku";
 import { buildReport } from "@/lib/amazon/buildReport";
-import { getUserClient } from "@/lib/supabase/getUserClient";
+
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB in bytes
 
-// Find the first and last date in the report (returns null if the dates can't be read)
+// Find the first and last date in the report (null if the dates can't be read)
 function getPeriod(rows) {
   const times = rows
     .map((r) => new Date(r["date/time"]).getTime())
@@ -18,7 +19,7 @@ function getPeriod(rows) {
   return { start: toDate(Math.min(...times)), end: toDate(Math.max(...times)) };
 }
 
-export async function POST(request) {
+async function handleUpload(request) {
   // 1. Check the user is logged in
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("sb-access-token")?.value;
@@ -26,15 +27,15 @@ export async function POST(request) {
   if (!accessToken) {
     return Response.json({ error: "Not authenticated" }, { status: 401 });
   }
-  
-  const { data, error } = await db.auth.getUser(accessToken);
+
+  const { data, error } = await supabase.auth.getUser(accessToken);
 
   if (error || !data.user) {
     return Response.json({ error: "Invalid or expired session" }, { status: 401 });
   }
 
   const userId = data.user.id;
-  const db = getUserClient(accessToken);
+  const db = getUserClient(accessToken); // acts as the logged-in user (RLS)
 
   // 2. Get the file from the form data
   const formData = await request.formData();
@@ -79,10 +80,11 @@ export async function POST(request) {
     .eq("user_id", userId);
 
   if (costsError) {
+    console.error("Load costs failed:", costsError);
     return Response.json({ error: "Could not load product costs" }, { status: 500 });
   }
 
-  // 7. Calculate everything (same function the "latest report" route will use)
+  // 7. Calculate everything (same function the "latest report" route uses)
   const report = buildReport(products, otherCharges, costs ?? []);
 
   // 8. Save the report
@@ -141,4 +143,17 @@ export async function POST(request) {
   }
 
   return Response.json({ ...report, report_id: savedReport.id }, { status: 200 });
+}
+
+// Wrapper: any crash becomes a readable JSON error instead of a blank 500
+export async function POST(request) {
+  try {
+    return await handleUpload(request);
+  } catch (err) {
+    console.error("Upload crashed:", err);
+    return Response.json(
+      { error: `Server error: ${err.message}` },
+      { status: 500 }
+    );
+  }
 }
