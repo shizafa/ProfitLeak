@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase/supabaseClient";
 import { parseReport } from "@/lib/amazon/parseReport";
 import { summarizeBySku, summarizeOtherCharges } from "@/lib/amazon/summarizeBySku";
 import { buildReport } from "@/lib/amazon/buildReport";
-
+import { getUserClient } from "@/lib/supabase/getUserClient";
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB in bytes
 
 // Find the first and last date in the report (returns null if the dates can't be read)
@@ -26,14 +26,15 @@ export async function POST(request) {
   if (!accessToken) {
     return Response.json({ error: "Not authenticated" }, { status: 401 });
   }
-
-  const { data, error } = await supabase.auth.getUser(accessToken);
+  
+  const { data, error } = await db.auth.getUser(accessToken);
 
   if (error || !data.user) {
     return Response.json({ error: "Invalid or expired session" }, { status: 401 });
   }
 
   const userId = data.user.id;
+  const db = getUserClient(accessToken);
 
   // 2. Get the file from the form data
   const formData = await request.formData();
@@ -72,7 +73,7 @@ export async function POST(request) {
   const otherCharges = summarizeOtherCharges(rows);
 
   // 6. Load this user's saved product costs
-  const { data: costs, error: costsError } = await supabase
+  const { data: costs, error: costsError } = await db
     .from("product_costs")
     .select("sku, cost_per_unit")
     .eq("user_id", userId);
@@ -87,7 +88,7 @@ export async function POST(request) {
   // 8. Save the report
   const period = getPeriod(rows);
 
-  const { data: savedReport, error: reportError } = await supabase
+  const { data: savedReport, error: reportError } = await db
     .from("reports")
     .insert({
       user_id: userId,
@@ -123,14 +124,14 @@ export async function POST(request) {
   }));
 
   if (resultRows.length > 0) {
-    const { error: resultsError } = await supabase
+    const { error: resultsError } = await db
       .from("report_results")
       .insert(resultRows);
 
     if (resultsError) {
       console.error("Save results failed:", resultsError);
       // Remove the half-saved report so we don't keep an empty one
-      await supabase.from("reports").delete().eq("id", savedReport.id);
+      await db.from("reports").delete().eq("id", savedReport.id);
 
       return Response.json(
         { error: `Could not save the results: ${resultsError.message}` },
