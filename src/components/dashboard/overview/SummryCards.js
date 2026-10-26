@@ -1,14 +1,52 @@
 "use client";
 
-const money = (n) => `$${Number(n).toFixed(2)}`;
-const empty = { profit: 0, units: 0, fees: 0, revenue: 0 };
+const money = (n) => `$${Number(n ?? 0).toFixed(2)}`;
+
+const empty = {
+  revenue: 0,
+  fees: 0,
+  units: 0,
+  refunds: 0,
+  other_charges: 0,
+  profit: 0,
+  skus_total: 0,
+  skus_with_cost: 0,
+};
 
 export default function SummaryCards({ totals = empty }) {
+  const hasProfit = totals.skus_with_cost > 0;
+
   const cards = [
-    { label: "Total Profit", value: money(totals.profit), icon: "bx bx-dollar-circle", color: "success" },
-    { label: "Units Sold", value: totals.units, icon: "bx bx-shopping-bag", color: "info" },
-    { label: "Amazon Fees", value: money(totals.fees), icon: "bx bx-user-circle", color: "warning" },
-    { label: "Revenue", value: money(totals.revenue), icon: "bx bx-wallet", color: "primary" },
+    {
+      label: "Revenue",
+      value: money(totals.revenue),
+      note: `${totals.units} units sold, ${totals.refunds} refunded`,
+      icon: "bx bx-wallet",
+      color: "primary",
+    },
+    {
+      label: "Amazon Fees",
+      value: money(totals.fees),
+      note: "Selling + FBA + other fees",
+      icon: "bx bx-receipt",
+      color: "warning",
+    },
+    {
+      label: "Other Charges",
+      value: money(totals.other_charges),
+      note: "Service fees, adjustments, etc.",
+      icon: "bx bx-error-circle",
+      color: "danger",
+    },
+    {
+      label: "Total Profit",
+      value: hasProfit ? money(totals.profit) : "—",
+      note: hasProfit
+        ? `Based on ${totals.skus_with_cost} of ${totals.skus_total} SKUs`
+        : "Add product costs to see profit",
+      icon: "bx bx-dollar-circle",
+      color: "success",
+    },
   ];
 
   return (
@@ -22,8 +60,8 @@ export default function SummaryCards({ totals = empty }) {
               </p>
               <div className="d-flex align-items-end justify-content-between mt-4">
                 <div>
-                  <h4 className="fs-22 fw-semibold ff-secondary mb-4">{c.value}</h4>
-                  <a href="#" className="text-decoration-underline">{c.link}</a>
+                  <h4 className="fs-22 fw-semibold ff-secondary mb-2">{c.value}</h4>
+                  <p className="text-muted fs-12 mb-0">{c.note}</p>
                 </div>
                 <div className="avatar-sm flex-shrink-0">
                   <span className={`avatar-title bg-${c.color}-subtle rounded fs-3`}>

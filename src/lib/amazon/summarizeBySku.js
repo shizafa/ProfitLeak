@@ -35,7 +35,7 @@ export function summarizeBySku(rows) {
     }
 
     const t = totals[sku];
-    const quantity = toNumber(row["quantity"]);
+    const quantity = Math.abs(toNumber(row["quantity"]));
 
     if (type === "Order") t.units_sold += quantity;
     if (type === "Refund") t.refund_count += quantity;
@@ -53,10 +53,48 @@ export function summarizeBySku(rows) {
       toNumber(row["other transaction fees"]);
   }
 
-  // Turn the object into a list and round the money
-  return Object.values(totals).map((t) => ({
-    ...t,
-    revenue: round2(t.revenue),
-    amazon_fees: round2(t.amazon_fees),
+  // Turn the object into a list, round the money, add the extra numbers
+  return Object.values(totals).map((t) => {
+    const revenue = round2(t.revenue);
+    const fees = round2(t.amazon_fees);
+
+    return {
+      ...t,
+      revenue,
+      amazon_fees: fees,
+      revenue_after_fees: round2(revenue - fees),
+      refund_rate: t.units_sold > 0 ? round2((t.refund_count / t.units_sold) * 100) : 0,
+      fee_percent: revenue !== 0 ? round2((fees / revenue) * 100) : 0,
+      avg_price_per_unit: t.units_sold > 0 ? round2(revenue / t.units_sold) : 0,
+      fee_per_unit: t.units_sold > 0 ? round2(fees / t.units_sold) : 0,
+    };
+  });
+}
+
+// Rows that are NOT product orders/refunds (Service Fee, Adjustment, etc.)
+// Returns a list: [{ type, count, amount }]
+export function summarizeOtherCharges(rows) {
+  const byType = {};
+
+  for (const row of rows) {
+    const sku = (row["sku"] || "").trim();
+    const type = (row["type"] || "").trim();
+
+    // Normal product rows are handled by summarizeBySku
+    if (sku && (type === "Order" || type === "Refund")) continue;
+
+    const label = type || "Other";
+
+    if (!byType[label]) {
+      byType[label] = { type: label, count: 0, amount: 0 };
+    }
+
+    byType[label].count += 1;
+    byType[label].amount += toNumber(row["total"]);
+  }
+
+  return Object.values(byType).map((c) => ({
+    ...c,
+    amount: round2(c.amount),
   }));
 }
