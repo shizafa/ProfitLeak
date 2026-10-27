@@ -4,8 +4,22 @@
 const money = (n) => (n === null || n === undefined ? "—" : `$${Number(n).toFixed(2)}`);
 const percent = (n) => (n === null || n === undefined ? "—" : `${n}%`);
 
+// Most losing first -> most profitable last. SKUs with no cost go at the bottom.
+const sortByProfit = (list) =>
+  [...list].sort((a, b) => {
+    const aNone = a.profit === null || a.profit === undefined;
+    const bNone = b.profit === null || b.profit === undefined;
+
+    if (aNone && bNone) return a.sku.localeCompare(b.sku);
+    if (aNone) return 1;
+    if (bNone) return -1;
+    return a.profit - b.profit || a.sku.localeCompare(b.sku);
+  });
+
 // onAddCost(row) is called when the "Add cost" button is clicked
-export default function Table({ results = [], onAddCost, emptyText })  {
+export default function Table({ results = [], onAddCost, emptyText }) {
+  const sorted = sortByProfit(results);
+
   return (
     <div className="col-xl-12">
       <div className="card" style={{ width: "100%" }}>
@@ -35,15 +49,15 @@ export default function Table({ results = [], onAddCost, emptyText })  {
                 </tr>
               </thead>
               <tbody>
-                {results.length === 0 && (
+                {sorted.length === 0 && (
                   <tr>
                     <td colSpan={15} className="text-center text-muted">
-                      Upload a report to see your products.
+                      {emptyText || "Upload a report to see your products."}
                     </td>
                   </tr>
                 )}
 
-                {results.map((r) => (
+                {sorted.map((r) => (
                   <tr key={r.sku}>
                     <td className="fw-medium link-primary">{r.sku}</td>
                     <td>{r.product_name}</td>
