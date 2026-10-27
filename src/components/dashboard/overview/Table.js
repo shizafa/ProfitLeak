@@ -1,7 +1,8 @@
 "use client";
 
 // Show "—" when a value is null (e.g. no cost saved yet)
-const money = (n) => (n === null || n === undefined ? "—" : `$${Number(n).toFixed(2)}`);
+const money = (n) =>
+  n === null || n === undefined ? "—" : `$${Number(n).toFixed(2)}`;
 const percent = (n) => (n === null || n === undefined ? "—" : `${n}%`);
 
 // Most losing first -> most profitable last. SKUs with no cost go at the bottom.
@@ -72,7 +73,11 @@ export default function Table({ results = [], onAddCost, emptyText }) {
                     <td>{money(r.product_total_cost)}</td>
                     <td
                       className={
-                        !r.has_cost ? "text-muted" : r.is_loss ? "text-danger" : "text-success"
+                        !r.has_cost
+                          ? "text-muted"
+                          : r.is_loss
+                            ? "text-danger"
+                            : "text-success"
                       }
                     >
                       {money(r.profit)}
@@ -80,17 +85,13 @@ export default function Table({ results = [], onAddCost, emptyText }) {
                     <td>{percent(r.margin)}</td>
                     <td>
                       {!r.has_cost ? (
-                        <span className="badge bg-warning-subtle text-warning">No cost</span>
-                      ) : (
-                        <span
-                          className={
-                            r.is_loss
-                              ? "badge bg-danger-subtle text-danger"
-                              : "badge bg-success-subtle text-success"
-                          }
-                        >
-                          {r.is_loss ? "Loss" : "Profit"}
+                        <span className="badge bg-warning-subtle text-warning">
+                          No cost
                         </span>
+                      ) : r.is_loss ? (
+                        <span className="text-danger">Loss</span>
+                      ) : (
+                        <span className="text-success">Profit</span>
                       )}
                     </td>
                     <td>
