@@ -4,22 +4,34 @@ import PageTitle from "@/components/dashboard/overview/PageTitle";
 import SummaryCards from "@/components/dashboard/overview/SummryCards";
 import Table from "@/components/dashboard/overview/Table";
 import OtherChargesTable from "@/components/dashboard/overview/OtherChargesTable";
+import AddCostModal from "@/components/dashboard/overview/AddCostModal";
 
 export default function DashboardPage() {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedRow, setSelectedRow] = useState(null); // the row whose cost is being added/edited
 
-  // Load the newest saved report when the page opens
+  // Fetch the newest saved report and put it on the page
+  async function loadReport() {
+    try {
+      const res = await fetch("/api/reports/latest");
+      const data = res.ok ? await res.json() : null;
+
+      // { empty: true } means the user has not uploaded a report yet
+      if (data && !data.empty) setReport(data);
+    } catch {}
+  }
+
+  // Load the report when the page opens
   useEffect(() => {
-    fetch("/api/reports/latest")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        // { empty: true } means the user has not uploaded a report yet
-        if (data && !data.empty) setReport(data);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    loadReport().finally(() => setLoading(false));
   }, []);
+
+  // Called by the popup after the cost was saved
+  async function handleCostSaved() {
+    await loadReport(); // profit, margin and badges are recalculated
+    setSelectedRow(null); // close the popup
+  }
 
   return (
     <>
@@ -40,12 +52,21 @@ export default function DashboardPage() {
         <Table
           results={report?.results}
           emptyText={loading ? "Loading..." : undefined}
+          onAddCost={setSelectedRow}
         />
       </div>
 
       <div className="row">
         <OtherChargesTable otherCharges={report?.otherCharges} />
       </div>
+
+      {selectedRow && (
+        <AddCostModal
+          row={selectedRow}
+          onClose={() => setSelectedRow(null)}
+          onSaved={handleCostSaved}
+        />
+      )}
     </>
   );
 }

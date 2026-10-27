@@ -85,7 +85,7 @@ export default function Table({ results = [], onAddCost, emptyText }) {
                     <td>{percent(r.margin)}</td>
                     <td>
                       {!r.has_cost ? (
-                        <span className="badge bg-warning-subtle text-warning">
+                        <span className="text-warning">
                           No cost
                         </span>
                       ) : r.is_loss ? (
