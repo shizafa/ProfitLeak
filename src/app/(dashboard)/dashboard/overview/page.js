@@ -1,20 +1,25 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import PageTitle from "@/components/dashboard/overview/PageTitle";
 import SummaryCards from "@/components/dashboard/overview/SummryCards";
 import Table from "@/components/dashboard/overview/Table";
 import OtherChargesTable from "@/components/dashboard/overview/OtherChargesTable";
 import AddCostModal from "@/components/dashboard/overview/AddCostModal";
 
-export default function DashboardPage() {
+function OverviewContent() {
+  const searchParams = useSearchParams();
+  const reportId = searchParams.get("report"); // set when opened from the History dropdown
+
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null); // the row whose cost is being added/edited
 
-  // Fetch the newest saved report and put it on the page
+  // Fetch the chosen report (or the newest one) and put it on the page
   async function loadReport() {
     try {
-      const res = await fetch("/api/reports/latest");
+      const url = reportId ? `/api/reports/${reportId}` : "/api/reports/latest";
+      const res = await fetch(url);
       const data = res.ok ? await res.json() : null;
 
       // { empty: true } means the user has not uploaded a report yet
@@ -22,10 +27,11 @@ export default function DashboardPage() {
     } catch {}
   }
 
-  // Load the report when the page opens
+  // Load the report when the page opens, and again if ?report= changes
   useEffect(() => {
+    setLoading(true);
     loadReport().finally(() => setLoading(false));
-  }, []);
+  }, [reportId]);
 
   // Called by the popup after the cost was saved
   async function handleCostSaved() {
@@ -68,5 +74,13 @@ export default function DashboardPage() {
         />
       )}
     </>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={null}>
+      <OverviewContent />
+    </Suspense>
   );
 }
