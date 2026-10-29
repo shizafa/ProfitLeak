@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase/supabaseClient";
 import { getUserClient } from "@/lib/supabase/getUserClient";
-import { buildReport } from "@/lib/amazon/buildReport";
+import { buildReportResponse } from "@/lib/reports/loadReport";
 
 export async function GET() {
   try {
@@ -41,42 +41,14 @@ export async function GET() {
       return Response.json({ empty: true }, { status: 200 });
     }
 
-    // 3. Load the SKU rows of that report
-    const { data: products, error: productsError } = await db
-      .from("report_results")
-      .select("sku, product_name, units_sold, refund_count, revenue, amazon_fees")
-      .eq("report_id", report.id)
-      .eq("user_id", userId);
+    // 3. Load the SKU rows + current costs, and build the report
+    const { data: result, error: buildError } = await buildReportResponse(db, userId, report);
 
-    if (productsError) {
-      console.error("Load results failed:", productsError);
-      return Response.json({ error: "Could not load the report results" }, { status: 500 });
+    if (buildError) {
+      return Response.json({ error: buildError.message }, { status: buildError.status });
     }
 
-    // 4. Load the CURRENT product costs (so costs added later are included)
-    const { data: costs, error: costsError } = await db
-      .from("product_costs")
-      .select("sku, cost_per_unit")
-      .eq("user_id", userId);
-
-    if (costsError) {
-      console.error("Load costs failed:", costsError);
-      return Response.json({ error: "Could not load product costs" }, { status: 500 });
-    }
-
-    // 5. Same calculation as the upload route
-    const result = buildReport(products ?? [], report.other_charges ?? [], costs ?? []);
-
-    return Response.json(
-      {
-        ...result,
-        report_id: report.id,
-        file_name: report.file_name,
-        period_start: report.period_start,
-        period_end: report.period_end,
-      },
-      { status: 200 }
-    );
+    return Response.json(result, { status: 200 });
   } catch (err) {
     console.error("Latest report crashed:", err);
     return Response.json({ error: `Server error: ${err.message}` }, { status: 500 });
