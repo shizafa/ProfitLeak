@@ -4,7 +4,7 @@ import { getUserClient } from "@/lib/supabase/getUserClient";
 import { buildReportResponse } from "@/lib/reports/loadReport";
 
 // Loads one specific report (picked from the History dropdown), same shape as /api/reports/latest.
-export async function GET(request, { params }) {
+export async function GET(_request, { params }) {
   try {
     const { id } = await params;
 
