@@ -38,43 +38,12 @@ export default function PersonalDetailsTab({ user, onSave }) {
         <Field label="Last Name" placeholder="Enter your last name" {...shared("lastName")} />
         <Field label="Phone Number" placeholder="Enter your phone number" {...shared("phone")} />
         <Field label="Email Address" type="email" placeholder="Enter your email" {...shared("email")} />
-        <Field label="Joining Date" type="date" col={12} {...shared("joiningDate")} />
 
-        <div className="col-lg-12">
-          <div className="mb-3">
-            <label htmlFor="skills" className="form-label">Skills</label>
-            <select
-              id="skills"
-              name="skills"
-              className="form-control"
-              multiple
-              value={form.skills}
-              onChange={handleSkills}
-            >
-              {SKILLS.map((s) => (
-                <option key={s} value={s.toLowerCase()}>{s}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <Field label="Designation" placeholder="Designation" {...shared("designation")} />
-        <Field label="Website" placeholder="www.example.com" {...shared("website")} />
         <Field label="City" col={4} placeholder="City" {...shared("city")} />
         <Field label="Country" col={4} placeholder="Country" {...shared("country")} />
         <Field label="Zip Code" col={4} minLength={5} maxLength={6} placeholder="Enter zipcode" {...shared("zipCode")} />
 
-        <div className="col-lg-12">
-          <div className="mb-3 pb-2">
-            <label htmlFor="description" className="form-label">Description</label>
-            <textarea
-              className="form-control"
-              rows={3}
-              placeholder="Enter your description"
-              {...shared("description")}
-            />
-          </div>
-        </div>
+        
 
         <div className="col-lg-12">
           <div className="hstack gap-2 justify-content-end">

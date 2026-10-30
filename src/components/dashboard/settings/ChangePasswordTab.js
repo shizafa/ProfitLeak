@@ -1,14 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const defaultSessions = [
-  { id: 1, icon: "ri-smartphone-line", device: "iPhone 12 Pro", info: "Los Angeles, United States - March 16 at 2:47PM" },
-  { id: 2, icon: "ri-tablet-line", device: "Apple iPad Pro", info: "Washington, United States - November 06 at 10:43AM" },
-  { id: 3, icon: "ri-smartphone-line", device: "Galaxy S21 Ultra 5G", info: "Connecticut, United States - June 12 at 3:24PM" },
-  { id: 4, icon: "ri-macbook-line", device: "Dell Inspiron 14", info: "Phoenix, United States - July 26 at 8:10AM" },
-];
-
-export default function ChangePasswordTab({ sessions = defaultSessions, onChangePassword, onLogout, onLogoutAll }) {
+export default function ChangePasswordTab() {
   const [form, setForm] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
   const [error, setError] = useState("");
 
@@ -67,32 +60,6 @@ export default function ChangePasswordTab({ sessions = defaultSessions, onChange
           </div>
         </div>
       </form>
-
-      <div className="mt-4 mb-3 border-bottom pb-2">
-        <div className="float-end">
-          <button type="button" className="btn btn-link link-primary p-0" onClick={onLogoutAll}>
-            All Logout
-          </button>
-        </div>
-        <h5 className="card-title">Login History</h5>
-      </div>
-
-      {sessions.map((s) => (
-        <div className="d-flex align-items-center mb-3" key={s.id}>
-          <div className="flex-shrink-0 avatar-sm">
-            <div className="avatar-title bg-light text-primary rounded-3 fs-18">
-              <i className={s.icon} />
-            </div>
-          </div>
-          <div className="flex-grow-1 ms-3">
-            <h6>{s.device}</h6>
-            <p className="text-muted mb-0">{s.info}</p>
-          </div>
-          <button type="button" className="btn btn-link p-0" onClick={() => onLogout?.(s.id)}>
-            Logout
-          </button>
-        </div>
-      ))}
     </>
   );
 }

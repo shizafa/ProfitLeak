@@ -638,7 +638,7 @@ progress {
   background-color: var(--vz-body-bg);
   border: var(--vz-border-width) solid var(--vz-border-color);
   border-radius: var(--vz-border-radius);
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
 }
 .figure {

@@ -1,4 +1,17 @@
+"use client";
+import React, { useEffect, useState } from "react";
+
 export default function ProfileView() {
+  const [fullName, setFullName] = useState(null);
+  
+    useEffect(() => {
+      fetch('/api/me')
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data?.full_name) setFullName(data.full_name);
+        })
+        .catch(() => {});
+    }, []);
   return (
     <div className="card mt-n5">
       <div className="card-body p-4">
@@ -25,7 +38,7 @@ export default function ProfileView() {
               </label>
             </div>
           </div>
-          <h5 className="fs-16 mb-1">Anna Adame</h5>
+          <h5 className="fs-16 mb-1">{fullName || "Anna Adame"}</h5>
           <p className="text-muted mb-0">Lead Designer / Developer</p>
         </div>
       </div>
