@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import LogoutModal from "./LogoutModal";
 
 // "2026-10-01" invalid/missing -> null
 function formatShortDate(dateStr) {
@@ -54,8 +55,14 @@ export default function Sidebar() {
     setHistoryOpen((open) => !open);
   }
 
-  const handleLogout = async (e) => {
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const handleLogoutClick = (e) => {
     e.preventDefault();
+    setLogoutModalOpen(true);
+  };
+
+  const handleLogoutConfirm = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
     } finally {
@@ -142,7 +149,7 @@ export default function Sidebar() {
               </a>
             </li>
             <li className="nav-item">
-              <a href="/login" className="nav-link menu-link" onClick={handleLogout}>
+              <a href="#" className="nav-link menu-link" onClick={handleLogoutClick}>
                 <i className="ri-logout-box-r-line" />{" "}
                 <span>Logout</span>
               </a>
@@ -151,6 +158,13 @@ export default function Sidebar() {
         </div>
       </div>
       <div className="sidebar-background" />
+
+      {logoutModalOpen && (
+        <LogoutModal
+          onClose={() => setLogoutModalOpen(false)}
+          onConfirm={handleLogoutConfirm}
+        />
+      )}
     </div>
   );
 }
