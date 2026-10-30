@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-
+//GOALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 // row: the table row that was clicked
 // onClose: called when the popup should close
 // onSaved: called after the cost was saved (the page reloads the report)
@@ -53,7 +53,7 @@ export default function AddCostModal({ row, onClose, onSaved }) {
         return;
       }
 
-      await onSaved?.(); // the page reloads the report, then closes the popup
+      await onSaved?.(); // the page reloads the report, FINALLY IT's WOKRINGG HAHAHAHAH
     } catch {
       setError("Something went wrong. Try again.");
     } finally {
