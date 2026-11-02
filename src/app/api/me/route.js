@@ -2,37 +2,53 @@ import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase/supabaseClient";
 import { supabaseAdmin } from "@/lib/supabase/supabaseAdmin";
 
-export async function GET() {
-  // 1. Read the token from the cookie
+async function getAuthUser() {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("sb-access-token")?.value;
+  const token = cookieStore.get("sb-access-token")?.value;
+  if (!token) return null;
 
-  if (!accessToken) {
+  const { data, error } = await supabase.auth.getUser(token);
+  if (error || !data.user) return null;
+  return data.user;
+}
+
+export async function GET() {
+  const user = await getAuthUser();
+  if (!user) {
     return Response.json({ error: "Not authenticated" }, { status: 401 });
   }
 
-  // 2. Ask Supabase whose token this is
-  const { data, error } = await supabase.auth.getUser(accessToken);
-
-  if (error || !data.user) {
-    return Response.json({ error: "Invalid or expired session" }, { status: 401 });
-  }
-
-  // 3. Look up this user's name in the users table
-  // (uses the admin client because RLS on "users" blocks the anon client)
-  const { data: profile, error: profileError } = await supabaseAdmin
+  const { data: profile, error } = await supabaseAdmin
     .from("users")
-    .select("full_name")
-    .eq("id", data.user.id)
+    .select("full_name, phone, city, country")
+    .eq("id", user.id)
     .single();
 
-  if (profileError || !profile) {
+  if (error || !profile) {
     return Response.json({ error: "Profile not found" }, { status: 404 });
   }
 
-  // 4. Success
-  return Response.json(
-    { id: data.user.id, full_name: profile.full_name },
-    { status: 200 }
-  );
+  return Response.json({ id: user.id, email: user.email, ...profile }, { status: 200 });
 }
+
+export async function PATCH(request) {
+  const user = await getAuthUser();
+  if (!user) {
+    return Response.json({ error: "Not authenticated" }, { status: 401 });
+  }
+
+  const { full_name, phone, city, country } = await request.json();
+
+  const { error } = await supabaseAdmin
+    .from("users")
+    .update({ full_name, phone, city, country })
+    .eq("id", user.id);
+
+  if (error) {
+    return Response.json({ error: "Failed to update profile" }, { status: 500 });
+  }
+
+  return Response.json({ message: "Profile updated successfully" }, { status: 200 });
+}
+
+

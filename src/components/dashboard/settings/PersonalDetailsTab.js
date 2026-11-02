@@ -2,52 +2,63 @@
 import { useState } from "react";
 import Field from "./Field";
 
-const SKILLS = ["Illustrator", "Photoshop", "CSS", "HTML", "Javascript", "Python", "PHP"];
-
-const empty = {
-  firstName: "", lastName: "", phone: "", email: "", joiningDate: "",
-  skills: [], designation: "", website: "", city: "", country: "",
-  zipCode: "", description: "",
-};
+const empty = { full_name: "", phone: "", city: "", country: "" };
 
 export default function PersonalDetailsTab({ user, onSave }) {
   const [form, setForm] = useState({ ...empty, ...user });
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSkills = (e) =>
-    setForm({
-      ...form,
-      skills: Array.from(e.target.selectedOptions, (o) => o.value),
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setMessage("");
+
+    const { full_name, phone, city, country } = form;
+    const res = await fetch("/api/me", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ full_name, phone, city, country }),
     });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave?.(form);
+    setSaving(false);
+    if (res.ok) {
+      setMessage("Profile updated");
+      onSave?.(form);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      setMessage(data.error || "Something went wrong");
+    }
   };
 
   const handleCancel = () => setForm({ ...empty, ...user });
 
-  const shared = (name) => ({ id: name, name, value: form[name], onChange: handleChange });
+  const shared = (name) => ({
+    id: name,
+    name,
+    value: form[name] ?? "",
+    onChange: handleChange,
+  });
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="row">
-        <Field label="First Name" placeholder="Enter your first name" {...shared("firstName")} />
-        <Field label="Last Name" placeholder="Enter your last name" {...shared("lastName")} />
+        <Field label="Full Name" placeholder={"full_name"} {...shared("full_name")} />
         <Field label="Phone Number" placeholder="Enter your phone number" {...shared("phone")} />
         <Field label="Email Address" type="email" placeholder="Enter your email" {...shared("email")} />
 
         <Field label="City" col={4} placeholder="City" {...shared("city")} />
         <Field label="Country" col={4} placeholder="Country" {...shared("country")} />
-        <Field label="Zip Code" col={4} minLength={5} maxLength={6} placeholder="Enter zipcode" {...shared("zipCode")} />
-
-        
 
         <div className="col-lg-12">
+          {message && <p className="mb-2">{message}</p>}
           <div className="hstack gap-2 justify-content-end">
-            <button type="submit" className="btn btn-primary">Update</button>
+            <button type="submit" className="btn btn-primary" disabled={saving}>
+              {saving ? "Updating..." : "Update"}
+            </button>
             <button type="button" className="btn btn-soft-success" onClick={handleCancel}>
               Cancel
             </button>
