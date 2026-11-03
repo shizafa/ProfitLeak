@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import ProfileView from '@/components/ProfileView';
 
 export default function TopBar() {
   const [fullName, setFullName] = useState(null);
+  const [email, setEmail] = useState(null);
 
   useEffect(() => {
     fetch('/api/me')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data?.full_name) setFullName(data.full_name);
+        if (data?.email) setEmail(data.email);
       })
       .catch(() => {});
   }, []);
@@ -40,25 +43,7 @@ export default function TopBar() {
           </div>
           {/* APP SEARCH END */}
           <div className="d-flex align-items-center">
-            <div className="dropdown ms-sm-3 header-item topbar-user">
-              <button
-                type="button"
-                className="btn material-shadow-none"
-                id="page-header-user-dropdown"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span className="d-flex align-items-center">
-                  <span className="text-start ms-xl-2">
-                    <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
-                      {fullName || 'Loading...'}
-                    </span>
-                  </span>
-                </span>
-              </button>
-              
-            </div>
+            <ProfileView fullName={fullName} email={email} />
           </div>
         </div>
       </div>

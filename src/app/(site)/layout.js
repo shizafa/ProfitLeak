@@ -15,6 +15,7 @@ export default function RootLayout({ children }) {
         <link href="/css/unicons-line.css" rel="stylesheet" />
         <link href="/css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
         <link href="/css/colors/default.css" rel="stylesheet" id="color-opt" />
+        <link href="/css/overrides.css" rel="stylesheet" type="text/css" />
       </head>
       <body>{children}</body>
     </html>

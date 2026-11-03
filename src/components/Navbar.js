@@ -1,17 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ProfileView from '@/components/ProfileView';
+import Link from 'next/link';
 
 // Source: index-saas.html lines 34-80
 // Client component: the hamburger calls toggleMenu(), defined in /js/app.js
 export default function Navbar() {
   const [fullName, setFullName] = useState(null);
+  const [email, setEmail] = useState(null);
 
   useEffect(() => {
     fetch('/api/me')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data?.full_name) setFullName(data.full_name);
+        if (data?.email) setEmail(data.email);
       })
       .catch(() => {});
   }, []);
@@ -67,9 +71,15 @@ export default function Navbar() {
             <li className="has-submenu">
               <a href="#pricing">Pricing</a>
             </li>
-            <li>
-              <a href={fullName ? '/dashboard' : '/login'}>{fullName || 'Login'}</a>
-            </li>
+            {fullName ? (
+              <li style={{ display: 'flex', alignItems: 'center', minHeight: 62 }}>
+                <ProfileView fullName={fullName} email={email} />
+              </li>
+            ) : (
+              <li>
+                <a href="/login">Login</a>
+              </li>
+            )}
           </ul>
           {/* end navigation menu */}
         </div>

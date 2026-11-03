@@ -1,0 +1,7 @@
+#topnav .navigation-menu .user-name-text {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#topnav.nav-sticky .navigation-menu .user-name-text {
+  color: #3c4858;
+}

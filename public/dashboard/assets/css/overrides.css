@@ -1,0 +1,6 @@
+.topbar-user .dropdown-menu {
+  top: 100% !important;
+  right: 0;
+  left: auto;
+  margin-top: 6px;
+}

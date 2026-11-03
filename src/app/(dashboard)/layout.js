@@ -37,6 +37,11 @@ export default function DashboardLayout({ children }) {
           rel="stylesheet"
           type="text/css"
         />
+        <link
+          href="/dashboard/assets/css/overrides.css"
+          rel="stylesheet"
+          type="text/css"
+        />
       </head>
       <body>
         <div id="layout-wrapper">
