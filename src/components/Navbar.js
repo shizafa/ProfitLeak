@@ -9,6 +9,7 @@ import Link from 'next/link';
 export default function Navbar() {
   const [fullName, setFullName] = useState(null);
   const [email, setEmail] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   useEffect(() => {
     fetch('/api/me')
@@ -16,6 +17,7 @@ export default function Navbar() {
       .then((data) => {
         if (data?.full_name) setFullName(data.full_name);
         if (data?.email) setEmail(data.email);
+        if (data?.avatar_url) setAvatarUrl(data.avatar_url);
       })
       .catch(() => {});
   }, []);
@@ -73,7 +75,7 @@ export default function Navbar() {
             </li>
             {fullName ? (
               <li style={{ display: 'flex', alignItems: 'center', minHeight: 62 }}>
-                <ProfileView fullName={fullName} email={email} />
+                <ProfileView fullName={fullName} email={email} avatarUrl={avatarUrl} />
               </li>
             ) : (
               <li>

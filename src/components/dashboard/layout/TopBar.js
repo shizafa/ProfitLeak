@@ -6,6 +6,7 @@ import ProfileView from '@/components/ProfileView';
 export default function TopBar() {
   const [fullName, setFullName] = useState(null);
   const [email, setEmail] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   useEffect(() => {
     fetch('/api/me')
@@ -13,6 +14,7 @@ export default function TopBar() {
       .then((data) => {
         if (data?.full_name) setFullName(data.full_name);
         if (data?.email) setEmail(data.email);
+        if (data?.avatar_url) setAvatarUrl(data.avatar_url);
       })
       .catch(() => {});
   }, []);
@@ -43,7 +45,7 @@ export default function TopBar() {
           </div>
           {/* APP SEARCH END */}
           <div className="d-flex align-items-center">
-            <ProfileView fullName={fullName} email={email} />
+            <ProfileView fullName={fullName} email={email} avatarUrl={avatarUrl} />
           </div>
         </div>
       </div>

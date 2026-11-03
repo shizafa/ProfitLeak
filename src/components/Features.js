@@ -67,7 +67,7 @@ export default function Features() {
           <div className="col-lg-6 col-md-5">
             <div className="app-feature-shape-left position-relative">
               <div className="text-center text-md-start">
-                <img src="/images/app/classic03.png" className="img-fluid" alt="" />
+                <img src="/images/phone1.png" className="img-fluid" alt="" />
               </div>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default function Features() {
           <div className="col-lg-6 col-md-5 order-1 order-md-2">
             <div className="app-feature-shape-right position-relative">
               <div className="text-center text-md-end">
-                <img src="/images/app/classic03.png" className="img-fluid" alt="" />
+                <img src="/images/phone2.png" className="img-fluid" alt="" />
               </div>
             </div>
           </div>

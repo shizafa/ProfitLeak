@@ -4,3 +4,8 @@
   left: auto;
   margin-top: 6px;
 }
+
+/* .img-thumbnail caps the avatar at max-width: 50%, squashing it into an oval. */
+.profile-user .user-profile-image {
+  max-width: none;
+}

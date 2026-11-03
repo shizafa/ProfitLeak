@@ -33,7 +33,7 @@ export default function Hero() {
             </div>
 
             <div className="home-dashboard">
-              <img src="/images/lapy.png" alt="" className="img-fluid" />
+              <img src="/images/dashboard-img.png" alt="" className="img-fluid" />
             </div>
 
             <img

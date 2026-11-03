@@ -12,7 +12,7 @@ function initials(name) {
     .join("");
 }
 
-export default function ProfileView({ fullName, email }) {
+export default function ProfileView({ fullName, email, avatarUrl }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const containerRef = useRef(null);
@@ -62,12 +62,21 @@ export default function ProfileView({ fullName, email }) {
         onClick={() => setMenuOpen((open) => !open)}
       >
         <span className="d-flex align-items-center">
-          <span
-            className="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary flex-shrink-0"
-            style={{ width: 32, height: 32, fontSize: 12, fontWeight: 600 }}
-          >
-            {initials(fullName)}
-          </span>
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt=""
+              className="rounded-circle flex-shrink-0"
+              style={{ width: 32, height: 32, objectFit: "cover" }}
+            />
+          ) : (
+            <span
+              className="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary flex-shrink-0"
+              style={{ width: 32, height: 32, fontSize: 12, fontWeight: 600 }}
+            >
+              {initials(fullName)}
+            </span>
+          )}
           <span className="text-start ms-xl-2">
             <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
               {displayName}

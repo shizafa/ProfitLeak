@@ -20,7 +20,7 @@ export async function GET() {
 
   const { data: profile, error } = await supabaseAdmin
     .from("users")
-    .select("full_name, phone, city, country")
+    .select("full_name, phone, city, country, avatar_url")
     .eq("id", user.id)
     .single();
 
